@@ -7,13 +7,22 @@ client = OpenAI()
 
 from openai import OpenAI
 client = OpenAI()
-  
+
+file = client.files.create(
+  file=open("./tse_takehome_dataset.csv", "rb"),
+  purpose='assistants'
+)  
 
 assistant = client.beta.assistants.create(
   name="Math Tutor",
-  instructions="You are a personal math tutor. Write and run code to answer math questions.",
+  instructions="The attached csv file has a list of people. The column headers represent their interests. Use the data to answer questions about interests that are similar to the column headers. Help the user as much as possible with getting better at using OpenAI's Assistants code_interpreter.",
   tools=[{"type": "code_interpreter"}],
   model="gpt-3.5-turbo-16k",
+  tool_resources={
+    "code_interpreter": {
+      "file_ids": [file.id]
+    }
+  }
 )
 
 thread = client.beta.threads.create()
@@ -21,13 +30,13 @@ thread = client.beta.threads.create()
 message = client.beta.threads.messages.create(
   thread_id=thread.id,
   role="user",
-  content="I need to solve the equation `3x + 11 = 14`. Can you help me?"
+  content="What is Tina Escobar's favorite city and why?"
 )
 
 run = client.beta.threads.runs.create_and_poll(
   thread_id=thread.id,
   assistant_id=assistant.id,
-  instructions="Please address the user as Jane Doe. The user has a premium account."
+  instructions="Please address the user as Michael Boegner. They are still learning about openAI."
 )
 
 if run.status == 'completed': 
