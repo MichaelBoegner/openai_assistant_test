@@ -15,7 +15,7 @@ file = client.files.create(
 
 assistant = client.beta.assistants.create(
   name="Math Tutor",
-  instructions="The attached csv file has a list of people. The column headers represent their interests. Use the data to answer questions about interests that are similar to the column headers. Help the user as much as possible with getting better at using OpenAI's Assistants code_interpreter.",
+  instructions="The attached csv file has a list of people. The column headers represent their interests. Use the data to build a fictional story that is three sentences long about their interests that are similar to the column headers. Help the user as much as possible with getting better at using OpenAI's Assistants code_interpreter.",
   tools=[{"type": "code_interpreter"}],
   model="gpt-4o",
   tool_resources={
