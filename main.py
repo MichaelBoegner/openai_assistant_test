@@ -14,8 +14,8 @@ file = client.files.create(
 )  
 
 assistant = client.beta.assistants.create(
-  name="Story Teller",
-  instructions="The attached csv file has a list of people. The column headers represent their interests. Use the data to build a fictional story that is three sentences long about their interests that are similar to the column headers. Help the user as much as possible with getting better at using OpenAI's Assistants code_interpreter.",
+  name="Math Tutor",
+  instructions="The attached csv file has a list of people. The column headers represent their interests. Use the data to answer questions about interests that are similar to the column headers. Help the user as much as possible with getting better at using OpenAI's Assistants code_interpreter.",
   tools=[{"type": "code_interpreter"}],
   model="gpt-4o",
   tool_resources={
@@ -30,7 +30,7 @@ thread = client.beta.threads.create()
 message = client.beta.threads.messages.create(
   thread_id=thread.id,
   role="user",
-  content="What is Tina Escobar's favorite city and why?"
+  content="Using Tina Escobar's data from the csv file, write me a fictional story 4 sentences long saying what their favorite city is and why."
 )
 
 run = client.beta.threads.runs.create_and_poll(
